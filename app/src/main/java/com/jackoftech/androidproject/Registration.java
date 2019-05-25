@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Registration extends AppCompatActivity {
 
 
-    private EditText rEmail, rPass, rName;
+    private EditText rEmail, rPasswd, rName;
     private Button nRegister;
     private RadioGroup rRadioGroup;
 
@@ -55,7 +55,7 @@ public class Registration extends AppCompatActivity {
         nRegister = findViewById(R.id.btnRegister);
 
         rEmail = findViewById(R.id.email);
-        rPass = findViewById(R.id.pass);
+        rPasswd = findViewById(R.id.passwd);
         rName = findViewById(R.id.name);
         rRadioGroup = findViewById(R.id.radioGroup);
 
@@ -73,7 +73,7 @@ public class Registration extends AppCompatActivity {
 
 
                 final String email = rEmail.getText().toString();
-                final String pass = rPass.getText().toString();
+                final String pass = rPasswd.getText().toString();
                 final String name = rName.getText().toString();
 
                 rAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(Registration.this, new OnCompleteListener<AuthResult>() {
