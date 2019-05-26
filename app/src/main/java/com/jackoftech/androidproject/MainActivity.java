@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
     private arrayAdapter arrayAdapter;
     private int i;
-
+// just a comment will be deleted
     private FirebaseAuth mAuth;
 
     ListView listView;

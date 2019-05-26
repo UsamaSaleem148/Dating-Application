@@ -13,7 +13,7 @@ import java.util.List;
 public class arrayAdapter extends ArrayAdapter<cards> {
 
     Context context;
-
+    // just a comment will be deleted
     public arrayAdapter(Context context, int resourceId, List<cards> items){
         super(context, resourceId, items);
     }

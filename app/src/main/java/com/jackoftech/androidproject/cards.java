@@ -1,7 +1,7 @@
 package com.jackoftech.androidproject;
 
 public class cards {
-
+    // just a comment will be deleted
     private String userId;
     private String name;
 
