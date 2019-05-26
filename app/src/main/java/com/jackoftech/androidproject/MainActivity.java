@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
     private arrayAdapter arrayAdapter;
     private int i;
-// just a comment will be deleted
+    private DatabaseReference userDb;
     private FirebaseAuth mAuth;
-
+    private String currentUId;
     ListView listView;
     List<cards> rowItems;
 
@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        userDb=FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
-
+        currentUId=mAuth.getCurrentUser().getUid();
         checkUserSex();
 
         rowItems = new ArrayList<cards>();
@@ -66,11 +66,17 @@ public class MainActivity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
+                cards obj=(cards) dataObject;
+                String UserId=obj.getUserId();
+               userDb.child(oppositeUserSex).child(UserId).child("connections").child("nope").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "Left !", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                cards obj=(cards) dataObject;
+                String UserId=obj.getUserId();
+                userDb.child(oppositeUserSex).child(UserId).child("connections").child("yeps").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "Right !", Toast.LENGTH_SHORT).show();
             }
 
@@ -170,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         oppositeSexDB.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("nope").hasChild(currentUId) && !dataSnapshot.child("connections").child("yeps").hasChild(currentUId)){
                     cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString());
                     rowItems.add(item);
                     arrayAdapter.notifyDataSetChanged();
