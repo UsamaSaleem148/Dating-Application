@@ -40,13 +40,12 @@ public class Login extends AppCompatActivity {
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
                     finish();
-                    return;
                 }
             }
         };
 
       //  nLogin = findViewById(R.id.btnLogin);
-nLogin=(Button) findViewById(R.id.btnLogin);
+        nLogin=(Button) findViewById(R.id.btnLogin);
         rEmail = findViewById(R.id.email);
         rPass = findViewById(R.id.pass);
 

@@ -198,6 +198,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LoginOrRegister.class);
         startActivity(intent);
         finish();
-        return;
     }
 }
