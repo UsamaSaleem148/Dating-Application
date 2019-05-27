@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -28,18 +29,20 @@ public class MainActivity extends AppCompatActivity {
     private cards cards_data[];
     private arrayAdapter arrayAdapter;
     private int i;
-    private DatabaseReference userDb;
     private FirebaseAuth mAuth;
     private String currentUId;
     ListView listView;
     List<cards> rowItems;
+    private DatabaseReference usersDb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userDb=FirebaseDatabase.getInstance().getReference().child("Users");
+        usersDb=FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
+
         currentUId=mAuth.getCurrentUser().getUid();
         checkUserSex();
 
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 //If you want to use it just cast it (String) dataObject
                 cards obj=(cards) dataObject;
                 String UserId=obj.getUserId();
-               userDb.child(oppositeUserSex).child(UserId).child("connections").child("nope").child(currentUId).setValue(true);
+               usersDb.child(oppositeUserSex).child(UserId).child("connections").child("nope").child(currentUId).setValue(true);
                 Toast.makeText(MainActivity.this, "Left !", Toast.LENGTH_SHORT).show();
             }
 
@@ -76,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 cards obj=(cards) dataObject;
                 String UserId=obj.getUserId();
-                userDb.child(oppositeUserSex).child(UserId).child("connections").child("yeps").child(currentUId).setValue(true);
+                usersDb.child(oppositeUserSex).child(UserId).child("connections").child("yeps").child(currentUId).setValue(true);
+                isConnectionMatch(UserId);
                 Toast.makeText(MainActivity.this, "Right !", Toast.LENGTH_SHORT).show();
             }
 
@@ -96,6 +100,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 Toast.makeText(MainActivity.this, "Clicked !", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void isConnectionMatch(String userId) {
+        DatabaseReference currentUserConnectionsDb = usersDb.child(userSex).child(currentUId).child("connections").child("yeps").child(userId);
+        currentUserConnectionsDb.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    Toast.makeText(MainActivity.this, "new Connection", Toast.LENGTH_LONG).show();
+                    usersDb.child(oppositeUserSex).child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUId).setValue(true);
+                    usersDb.child(userSex).child(currentUId).child("connections").child("matches").child(dataSnapshot.getKey()).setValue(true);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 

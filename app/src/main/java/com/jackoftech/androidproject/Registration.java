@@ -79,17 +79,16 @@ public class Registration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()){
-                            Log.d("Firebase", "onComplete ");
-                            Toast.makeText(Registration.this, "Sign Up Error", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(Registration.this, "Sign Up Error", Toast.LENGTH_SHORT).show();
                         }else
                             {
-                            Log.d("Firebase", "onComplete Else ");
                             String userId = rAuth.getCurrentUser().getUid();
                                 DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(radioButton.getText().toString()).child(userId).child("name");
                             currentUserDb.setValue(name);
                         }
                     }
                 });
+
             }}
         });
     }
