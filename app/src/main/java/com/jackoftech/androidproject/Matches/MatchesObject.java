@@ -1,24 +1,21 @@
-package com.jackoftech.androidproject;
+package com.jackoftech.androidproject.Matches;
 
-public class cards {
-    // just a comment will be deleted
+
+public class MatchesObject {
     private String userId;
     private String name;
     private String profileImageUrl;
-
-
-    public cards (String userId, String name, String profileImageUrl){
+    public MatchesObject (String userId, String name, String profileImageUrl){
         this.userId = userId;
         this.name = name;
         this.profileImageUrl = profileImageUrl;
-
     }
 
     public String getUserId(){
         return userId;
     }
     public void setUserID(String userID){
-        this.userId = userID;
+        this.userId = userId;
     }
 
     public String getName(){
@@ -28,11 +25,10 @@ public class cards {
         this.name = name;
     }
 
-    public String getprofileImageUrl(){
+    public String getProfileImageUrl(){
         return profileImageUrl;
     }
-    public void setprofileImageUrl(String profileImageUrl){
+    public void setProfileImageUrl(String profileImageUrl){
         this.profileImageUrl = profileImageUrl;
     }
-
 }

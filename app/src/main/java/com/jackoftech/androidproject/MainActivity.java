@@ -2,12 +2,10 @@ package com.jackoftech.androidproject;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +17,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jackoftech.androidproject.Cards.arrayAdapter;
+import com.jackoftech.androidproject.Cards.cards;
+import com.jackoftech.androidproject.Matches.MatchesActivity;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private cards cards_data[];
-    private arrayAdapter arrayAdapter;
+    private com.jackoftech.androidproject.Cards.arrayAdapter arrayAdapter;
     private int i;
     private FirebaseAuth mAuth;
     private String currentUId;
@@ -199,6 +200,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToSettings(View view) {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+    public void goToMatches(View view){
+        Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
         startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.jackoftech.androidproject;
+package com.jackoftech.androidproject.Cards;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.jackoftech.androidproject.R;
 
 import java.util.List;
 
